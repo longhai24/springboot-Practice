@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianxing.springboot.dao.TRecordDAO">
+  <resultMap id="BaseResultMap" type="com.tianxing.springboot.pojo.TRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="stuCode" jdbcType="VARCHAR" property="stucode" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="des" jdbcType="VARCHAR" property="des" />
+    <result column="createbyname" jdbcType="VARCHAR" property="createbyname"/>
+     <result column="sname" jdbcType="VARCHAR" property="stuname"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, stuCode, createDate, createBy, des
+  </sql>
+  <select id="getTRecord"  resultMap="BaseResultMap">
+   SELECT 
+	r.*,
+	s1.`NAME` AS `createbyname`,
+	s2.`NAME` AS `sname`
+	 FROM 
+	`t_record` AS r
+	 JOIN 
+	`t_student` AS s1
+	 ON r.`createBy`=s1.`CODE`
+	 JOIN `t_student` AS s2
+	 ON r.`stuCode`=s2.`CODE`
+	 <where>
+	 <if test="stucode!=null">
+	 r.`stuCode`=#{stucode}
+	 </if>
+	 <if test="stuname!=null">
+	 and  s2.`name` LIKE CONCAT("%", #{stuname},"%")
+	 </if>
+	 <if test="name!=null">
+	 and  r.`name` LIKE CONCAT("%", #{name},"%")
+	 </if>
+	 <if test="id!=null">
+	 and  r.id=#{id}
+	 </if>
+	 </where>
+  </select>
+  <delete id="deleteTRecord" parameterType="java.lang.Integer">
+    delete from t_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addTRecord" parameterType="com.tianxing.springboot.pojo.TRecord">
+    insert into t_record (`name`, stuCode, 
+      createDate, createBy, des
+      )
+    values ( #{trecord.name,jdbcType=VARCHAR}, #{trecord.stucode,jdbcType=VARCHAR}, 
+      CURRENT_TIMESTAMP, #{trecord.createby,jdbcType=VARCHAR}, #{trecord.des,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianxing.springboot.pojo.TRecord">
+    insert into t_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="stucode != null">
+        stuCode,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stucode != null">
+        #{stucode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyTRecord" >
+    update t_record
+    <set>
+      <if test="trecord.name != null">
+        `name` = #{trecord.name,jdbcType=VARCHAR},
+      </if>
+      <if test="trecord.stucode != null">
+        stuCode = #{trecord.stucode,jdbcType=VARCHAR},
+      </if>
+      <if test="trecord.createby != null">
+        createBy = #{trecord.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="trecord.des != null">
+        des = #{trecord.des,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{trecord.id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianxing.springboot.pojo.TRecord">
+    update t_record
+    set `name` = #{name,jdbcType=VARCHAR},
+      stuCode = #{stucode,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      createBy = #{createby,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

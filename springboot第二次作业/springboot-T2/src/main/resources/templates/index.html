@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>超市订单管理系统</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<style>
+			[v-cloak]{
+				display: none;
+			}
+			.navbar-default {
+				background: cornflowerblue;
+
+			}
+
+			li:nth-child(3):hover {
+				background-color: #5cb85c;
+			}
+
+			.list-group-item {
+				border-left: none;
+				border-right: none;
+			}
+
+			.table th {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body onload="showWindowDialog('/c/list','学生信息')">
+		<nav class="navbar navbar-default">
+			<div class="navbar-header col-lg-6 col-md-6 col-sm-6">
+				<a class="navbar-brand" style="text-indent: 35px;color: white;">奖惩管理系统
+				</a>
+				<button class="navbar-toggle " data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse col-lg-4 col-lg-offset-2">
+				<ul class="nav navbar-nav ">
+					<li><a style="color: white;">[[${session.emp.name}]]，欢迎你</a></li>
+					<li><a class="btn btn-success" style="color: white;">退出</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container col-lg-12">
+			<div>
+				<!-- 左侧边栏 -->
+				<div class="col-lg-2 text-center" style="border: 1px solid #CCCCCC;">
+					<dl class="list-group" style="border: none;">
+						<dt class="list-group-item" style="background: steelblue;color: white;margin-top: 10px;">功能列表 </dt>
+						<dd class="list-group-item" style="border-top:none ;" onclick="showWindowDialog('/c/list','学生信息')">学生列表</dd>
+						<dd class="list-group-item" onclick="showWindowDialog('/c/details','奖惩信息')">奖惩管理</dd>
+						<dd class="list-group-item">退出系统</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script src="/js/jquery-1.12.4.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/dialog.js"></script>
+	
+</html>

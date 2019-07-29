@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>超市订单管理系统</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<style>
+			[v-cloak]{
+				display: none;
+			}
+			.navbar-default {
+				background: cornflowerblue;
+
+			}
+
+			li:nth-child(3):hover {
+				background-color: #5cb85c;
+			}
+
+			.list-group-item {
+				border-left: none;
+				border-right: none;
+			}
+
+			.table th {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="row">
+						<h5 class="col-lg-12  col-md-12 col-sm-12 col-xs-12 form-control">
+							<a><span style="font-size: 20px;" class="glyphicon glyphicon-home"></span></a>
+							你现在的位置是:<a class="alert-info">奖惩管理页面</a>
+						</h5>
+					</div>
+					<div id="center">
+						<div class="row" style="background: rgba(223,223,223,0.2);padding: 10px 0px;">
+							<form th:action="|/c/details|" method="post" class="form-inline col-lg-10  col-md-10 col-sm-10 col-xs-10">
+								<div class="form-group">
+									<label for="name">奖惩:</label>
+									<input  id="name" name="name" class="form-control" />
+								</div>
+								<div class="form-group">
+									<label for="stuname">学生名称:</label>
+									<input  id="stuname" name="stuname" class="form-control" />
+								</div>
+								<button class="btn btn-success"><span style="font-size: 20px;" class="glyphicon glyphicon-search"></span>
+									查询</button>
+							</form>
+							<a th:href="|/c/toAdd|" class="btn btn-info" ><span class="glyphicon glyphicon-plus"
+								 style="font-size: 20px;"></span> 添加记录</a>
+						</div>
+						
+						<table class="table table-hover table-striped  text-center">
+		<thead>
+			<tr style="background-color: #EFEFEF">
+				<th>序号</th>
+				<th>奖惩</th>
+				<th>学生名称</th>
+				<th>创建人</th>
+				<th>描述</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody th:remove="${details2==null||details2.size()==0?'none':'all-but-first'}">
+			<!-- temp,iter:${#numbers.sequence(2,50,1)} 固定 -->
+			<tr th:each="temp,iter:${details2}">
+			    <td th:text="${iter.count}"></td>
+				<td th:text="${temp.name}"></td>
+				<td th:text="${temp.stuname}">静态系统消息1</td>
+				<td th:text="${temp.createbyname}">静态系统消息1</td>
+				<td th:text="${temp.des}">静态系统消息1</td>
+				<td>
+				<a title="修改" th:onclick="toModify([[${temp.id}]])">
+				<span class="glyphicon glyphicon-edit"></span>
+						</a>
+				<a title="删除" th:href="|/c/delete?id=${temp.id}|"><span class="glyphicon glyphicon-trash"></span></a>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="6" style="color:red">没有找到数据！</th>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+			
+
+	</body>
+	<script src="/js/jquery-1.12.4.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/dialog.js"></script>
+	<script type="text/javascript">
+	function toModify(id){
+		showWindowDialog('/c/toModify?id='+id,'奖惩信息')
+	}
+	</script>
+</html>

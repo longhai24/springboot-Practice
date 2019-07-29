@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<title></title>
+</head>
+<body>
+       <form th:action="|/c/modify|" method="post" class="form-horizontal" style="padding-top: 20px;">
+			<input name="id" style="display: none" th:value="${modifyR.id}">
+			<div class="form-group">
+				<label for="name" class="col-md-2 control-label">惩奖记录名</label>
+				<div class="col-md-8">
+					<input name="name"  type="text" class="form-control" id="name" placeholder="请输入" th:value="${modifyR.name}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="stucode" class="col-md-2 control-label">对象</label>
+				<div class="col-md-8">
+					<select name="stucode"  type="text" class="form-control" id="stucode" placeholder="请输入" th:value="${modifyR.stucode}">
+					<option th:each="temp,iter:${stulist}" th:value="${temp.code}" th:selected="${temp.code==modifyR.stucode}">
+					[[${temp.name}]]
+					</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="des" class="col-md-2 control-label">描述</label>
+				<div class="col-md-8">
+					<textarea name="des"  type="text" class="form-control" id="des" placeholder="请输入" th:text="${modifyR.des}">
+					
+					</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+			<div class="col-md-12 text-center">
+				<input type="submit" class="btn btn-default" value="保存">
+			</div>
+			</div>
+		</form>
+</body>
+</html>
